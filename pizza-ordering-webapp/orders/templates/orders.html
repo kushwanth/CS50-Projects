@@ -1,0 +1,97 @@
+<!doctype HTML>
+<html>
+<head>
+<title>Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+<a href="{% url 'myorders' %}"><button type="submit" class="btn btn-outline-primary">Your Orders&nbsp;{{ user }}</button></a>
+<h3><a class="navbar-brand" href="{% url 'menu' %}">Menu</a></h3>
+<a href="{% url 'logout' %}"><button type="submit" class="btn btn-outline-success">Logout&nbsp;{{ user }}</button></a>
+</nav>
+<h3 align="center">choose your Pizza type</h3>
+<form action="{% url 'menu' %}" method="post">
+  {% csrf_token %}
+  <div class="form-group mb-2">
+  <div class="col">
+   <label for="pizzatype">Pizza Type</label>
+   <select class="form-control" id="pizzatype" name="pizzatype" required>
+     <option value="R">Regular</option>
+     <option value="S">Silican</option>
+   </select>
+</div>
+ <div class="col">
+  <label for="pizzasize">Pizza Size</label>
+  <select class="form-control" id="pizzasize" name="pizzasize" required>
+    <option value="S">Small</option>
+    <option value="L">Large</option>
+  </select>
+</div>
+</div>
+<div class="container">
+  <div class="card">
+    <div class="card-header">Topings</div>
+    <div class="col">
+      {% for toping in topings %}
+    <input type="checkbox" id="topings" value="{{ toping.id }}" name="topings[]" requried>
+    <label for="topings">{{ toping }}</label>
+    &nbsp;
+    {% endfor %}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Subs<div class="card-text"><li>With no topings you will get chesse Pizza</li><li>You can select upto 5 topings</li><li>Pizzas with more than 3 topings is considered as Special Pizza</li></div></div>
+  <div class="row">
+    <div class="col">
+      <h5>Subs of Small Size</h5>
+      {% for small in smallsub %}
+    <input type="checkbox" id="small" value="{{ small.id }}" name="subs">
+    <label for="small">{{ small.subs_name }}$ {{ small.subs_price}}</label><br>
+    {% endfor %}
+    </div>
+    <div class="col">
+      <h5>Subs of Large Size</h5>
+      {% for large in largesub %}
+    <input type="checkbox" id="large" value="{{ large.id }}" name="subs">
+    <label for="large">{{ large.subs_name }}$ {{ large.subs_price}}</label><br>
+    {% endfor %}
+    </div>
+  </div>
+</div>
+  <div class="card">
+    <div class="card-header">Pastas</div>
+    <div class="col">
+      {% for pasta in pastas %}
+    <input type="checkbox" id="pastas" value="{{ pasta.id }}" name="pastas[]">
+    <label for="pastas">{{ pasta.pasta_name }} $ {{ pasta.pasta_price}}</label>
+    &nbsp;
+    {% endfor %}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Salads</div>
+    <div class="col">
+      {% for salad in salads %}
+    <input type="checkbox" id="salads" value="{{ salad.id }}" name="salads[]">
+    <label for="salad">{{ salad.salad_name }} $ {{ salad.salad_price}}</label>
+    &nbsp;
+    {% endfor %}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Dinner Plates<h6 class="card-text">S-small, L-large</h6></div>
+    <div class="col">
+      {% for dp in dps %}
+    <input type="checkbox" id="dps" value="{{ dp.id }}" name="dps[]">
+    <label for="dps">{{ dp.dp_name }}-{{ dp.dp_size}} $ {{ dp.dp_price}}</label>
+    &nbsp;
+    {% endfor %}
+    </div>
+  </div>
+</div>
+<button type="submit" class="btn btn-primary btn-block">Review Your Order</button>
+</form>
+</body>
+</html>

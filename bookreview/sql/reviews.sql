@@ -1,0 +1,5 @@
+CREATE TABLE reviews(
+username VARCHAR PRIMARY KEY,
+title VARCHAR NOT NULL,
+rating INTEGER NOT NULL,
+reviewing VARCHAR, isbn VARCHAR NOT NULL);

@@ -1,0 +1,49 @@
+<!doctype HTML>
+<head>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<style type="text/css">
+#main {
+display: table-cell;
+width: 100%;
+align-content:center;
+}
+@media only screen and (min-device-width: 481px) {
+      #main-users {
+        float: left;
+        width: 25%;
+      }
+      #main-form {
+        float: left;
+        width: 75%;
+      }
+    }
+</style>
+</head>
+<body>
+<h1 align="center">Welcome to Flack</h1>
+<div class="container" id="main">
+<div class="container" id="main-users">
+<h2>Available rooms</h2>
+{% for room in room %}
+<h3>{{ room }}</h3>
+{% endfor %}
+<p>if you are looking for room which is not there please enter the roomname, the room will be automatically created for you</p>
+<a href="/private"><button type="button" class="btn btn-primary">Private Chat</button></a>
+</div>
+<div class="container" id="main-form">
+  <form method="POST">
+    <div class="form-group">
+      <label for="user">User Name</label>
+      <input class="form-control" id="user" name="user" required>
+    </div>
+    <div class="form-group">
+      <label for="cname">Room Name</label>
+      <input  class="form-control" id="cname" name="cname" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Join</button>
+  </form>
+</div>
+</div>
+</body>

@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    User
+{% endblock %}                                             
+{% block body %}
+<h1 align="center">Profile</h1>
+{{user}}
+<h3>Enter Bookname, ISBN, Author</h3>
+<form action="{{url_for('search')}}" method="post">
+<input type="text" placeholder="book name or isbn or author" name="search">
+<input type="submit" placeholder="submit">
+</form>
+<h2><a href="logout">Logout</a></h2>
+{% endblock %}

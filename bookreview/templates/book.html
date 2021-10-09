@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    book
+{% endblock %}
+
+{% block body %}
+<h1 align="center">Book Details</h1>
+<form action="{{url_for('submit')}}" method="post">
+<ul>
+<li><h3>book title:</h3><p name="nameofbook">{{ nameofbook }}</p></li>
+<input type="hidden" name="nameofbook" value="{{ nameofbook }}"/>
+<li><h3>book author:</h3><p>{{ nameofauthor }}</p></li>
+<li><h3>publication year:</h3><p>{{ year }}</p></li>
+<li><h3>book ISBN:</h3><p name="isbn">{{ isbn }}</p></li>
+<input type="hidden" name="isbn" value="{{ isbn }}"/>
+<li><h3>book rating:</h3><p>{{ rating }}</p></li>
+<li><h3>total rating:</h3><p>{{ rate }}</p></li>
+<li><h3>your review:</h3><p>{{ userview }}</p></li>
+</ul>
+<h1 align="center">Submit your Review</h1>
+<h2>your rating</h2>
+  <input type="radio" name="options" id="one" value="1">
+<label for="one">1</label><br>
+  <input type="radio" name="options" id="two" value="2">
+<label for="two">2</label><br>
+  <input type="radio" name="options" id="three" value="3">
+<label for="three">3</label><br>
+  <input type="radio" name="options" id="four" value="4">
+<label for="four">4</label><br>
+  <input type="radio" name="options" id="five" value="5">
+<label for="five">5</label><br>
+ <label for="review">Write your review</label><br>
+  <input type="text" name="review" id="review" maxlength="250" style="width: 100%; height: 60%"><br>
+ <input type="submit" value="Submit">
+</form>
+{% endblock %}

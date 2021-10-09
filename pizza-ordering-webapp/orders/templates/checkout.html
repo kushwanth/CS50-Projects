@@ -1,0 +1,44 @@
+<!doctype HTML>
+<html>
+<head>
+<title>Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+<a href="{% url 'myorders' %}"><button type="submit" class="btn btn-outline-primary">Your Orders</button></a>
+<h3><a class="navbar-brand">Checkout</a></h3>
+<a href="{% url 'logout' %}"><button type="submit" class="btn btn-outline-success">Logout&nbsp;{{ user }}</button></a>
+</nav>
+<div class="card" style="width: 100%;">
+  <div class="card-header"><h3>Cart</h3><h5 class="card-title">Order Number:{{ ordernum }}</h5></div>
+  <div class="card-body">
+    <h3 class="card-title">Items</h3>
+    <h4 class="card-text">{{ pizza }}</h4>
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Item Name</th>
+      <th scope="col">Item Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for extra,pay in extras %}
+    <tr>
+    <td>{{ extra }}</td>
+    <td>{{ pay }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+<a href="{% url 'menu' %}"><button type="submit" class="btn btn-outline-primary">Back To Menu</button></a>
+<form class="form-inline" action="{% url 'checkout' %}" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="id" value="{{ ordernum }}">
+    <button type="submit" class="btn btn-primary">Place Order- ${{ paydue }}</button>
+  </form>
+  </div>
+</div>
+</body>
+</html>

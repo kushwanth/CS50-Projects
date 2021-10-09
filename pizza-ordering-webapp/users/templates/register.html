@@ -1,0 +1,37 @@
+<!doctype HTML>
+<html>
+<head>
+<title>Register</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light">
+  <h3><a class="navbar-brand">Pinnochio’s Pizza & Subs</a></h3>
+  <a href="{% url 'login' %}"><button type="submit" class="btn btn-outline-primary">Login</button></a>
+  </nav>
+<h1 align="center">Register</h1>
+<div class="container" style="width: 100%; align-content:center;">
+  <form method="POST" action="{% url 'index' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="user">User Name</label>
+      <input class="form-control" id="user" name="user" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input  class="form-control" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password</label>
+      <input type="password"  class="form-control" id="pwd" name="pwd" required>
+    </div>
+    <div class="form-group">
+      <label for="rpwd">Retype Password</label>
+      <input type="password"  class="form-control" id="rpwd" name="rpwd" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+  </div>
+</body>
+</html>

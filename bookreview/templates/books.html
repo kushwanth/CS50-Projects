@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    books
+{% endblock %}
+
+{% block body %}
+<h1 align="center" style="font-size:64px">Books</h1>
+<table align="center" style="border:2px solid black; border-collapse: collapse">
+        <tr align="center" style="font-size:32px">
+                <th>Book</th>
+                <th>Author</th>
+        </tr>
+{% for book, author in data.items() %}
+<form action="{{url_for('book')}}" method="post">
+<tr style="border: 1.5px solid grey">
+    <td name="book" align="center" style="border: 1.5px solid grey">{{ book }}</td>
+    <input type="hidden" name="book" value="{{ book }}"/>
+    <td name="author" align="center" style="border: 1.5px solid grey">{{ author }}</td>
+    <input type="hidden" name="author"value="{{ author }}"/>
+    <td><button type="submit">Go to book</button></td>
+</form>
+</tr>
+{% endfor %}
+</table>
+<h3 align="center"> if table is blank, it means there is no book related to your query</h3>
+{% endblock %}

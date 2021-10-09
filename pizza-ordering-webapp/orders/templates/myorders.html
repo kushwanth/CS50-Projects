@@ -1,0 +1,45 @@
+<!doctype HTML>
+<html>
+<head>
+  <title>Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <a href="{% url 'menu' %}"><button type="submit" class="btn btn-outline-primary">Menu</button></a>
+    <h3><a class="navbar-brand">Your Orders&nbsp;{{ user }}</a></h3>
+    <a href="{% url 'logout' %}"><button type="submit" class="btn btn-outline-success">Logout&nbsp;{{ user }}</button></a>
+  </nav>
+  {% for id, pay, status, item in orders %}
+  <div class="card" style="width: 100%;">
+    <div class="row">
+      <div class="col">
+        <div class="btn btn-outline-primary">
+          <h4 class="card-title">Order Number:{{ id }}</h4>
+          <h5 class="card-text">Order Status:{{ status }}</h5>
+          <h4 class="card-text">Order Price:{{ pay }}</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card-title">Order Items</div>
+          {% for each in item %}
+          <div class="card-text">{{ each }}</div>
+          {% endfor %}
+        </div>
+      <div class="col">
+        {% if status == "Not Placed" %}
+        <form class="form-inline" action="{% url 'checkout' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="id" value="{{ id }}">
+          <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+        {% endif %}
+      </div>
+      {% empty %}
+      <div class="card-title">You Have No orders</div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype HTML>
+<head>
+  <title>Private Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', () => {
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+    document.querySelector('#msgsend').onclick = () => {
+      var msg = $('#msgtext').val();
+      $('#msgtext').val('');
+      var user = document.querySelector('#user').innerHTML;
+      var room = document.querySelector('#room').innerHTML;
+      socket.emit('pmessage', {'user': user, 'room': room, 'msg': msg});
+    }
+    socket.on ('securemsg', data => {
+      const p = document.createElement('p');
+      p.innerHTML = '<section class="btn-group" role="group"><button type="button" class="btn btn-outline-success">'+`${ data.user }`+'</button><button type="button" class="btn btn-secondary">'+`${ data.time }`+'</button></section><section class="alert alert-primary">'+`${data.msg}`+'</section>';
+      document.querySelector('#messages').append(p);
+      //$("#messages").animate({ scrollTop: $("#messages")[0].scrollHeight}, 1000);
+    })
+  });
+  </script>
+  <style type="text/css">
+  #main {
+    display: table-cell;
+    width: 100%;
+    align-content:center;
+    position: fixed;
+  }
+  @media only screen and (min-device-width: 481px) {
+    #logout-view {
+      float: left;
+      width: 30%;
+    }
+    #msg-view {
+      float: left;
+      width: 70%;
+    }
+  }
+  #messages {
+    position: fixed;
+    height: 499px;
+    overflow: scroll;
+  }
+  .card {
+    border: 2px solid darkgrey;
+  }
+  #msgform {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+  }
+  </style>
+</head>
+<body>
+  <h1 align="center" id="room">Private Room-{{room}}</h1>
+  <h2 align="center" id="user">Display Name-{{ user }}</h2>
+  <div class="container" id="main">
+    <div class="container" id="logout-view">
+      <h3 class="alert alert-danger">for Security reasons private chats won't have stored messages in server nor in browser, If you close the tab or logout your session will be lost and can't be recovered</h3>
+      <form action="{{ url_for('plogout')}}" method="post">
+      <input type="hidden" name="proom" value="{{room}}">
+      <input type="hidden" name="puser" value="{{user}}">
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Logout</button></form>
+    </div>
+    <div class="container" id="msg-view">
+      <div id="messages">
+      </div>
+    </div>
+    <div id="msgform">
+      <form action="javascript:void(0);">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Enter Your Message</span>
+          </div>
+          <input type="text" class="form-control" id="msgtext">
+          <input type="submit" class="btn btn-primary" id="msgsend" value="send">
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
